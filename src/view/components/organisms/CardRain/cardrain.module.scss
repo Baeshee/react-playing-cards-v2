@@ -1,0 +1,35 @@
+@import "../../../../styles/global.scss";
+
+.cardrain {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.card {
+  @include flex-column;
+  @include flex-center;
+  $card-width: 100px;
+  $card-height: 150px;
+
+  position: absolute;
+  width: $card-width;
+  height: $card-height;
+  border-radius: 1rem;
+  gap: 1rem;
+  background: #f9f9f9;
+  box-shadow: 1px 1px 5px 1px rgba(150, 150, 150, 0.15);
+  transform-style: preserve-3d;
+
+  &__symbol {
+    width: 60%;
+    height: auto;
+    color: $black;
+    user-select: none;
+  }
+
+  &__text {
+    font-size: var(--medium);
+  }
+}

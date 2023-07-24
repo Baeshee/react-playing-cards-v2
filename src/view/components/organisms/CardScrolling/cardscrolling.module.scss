@@ -1,0 +1,8 @@
+.flex {
+  display: flex;
+  position: relative;
+  white-space: nowrap;
+  will-change: transform;
+  flex-direction: row;
+  gap: 2rem;
+}
