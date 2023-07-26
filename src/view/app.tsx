@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
-import $ from "../styles/app.module.scss";
 import { getData } from "../core/services/firebase/handlers";
+import $ from "../styles/app.module.scss";
+import CardScrolling from "./components/organisms/CardScrolling/CardScrolling";
 import Card from "./components/molecules/Card/Card";
-import gsap from "gsap";
-import { horizontalLoop } from "../core/hooks/autoScroll";
+import CardThrow from "./components/organisms/CardThrow/CardThrow";
+import CardRain from "./components/organisms/CardRain/CardRain";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import { cx } from "../core/helpers/join-classnames";
 
 const App: React.FC = () => {
   const [cards, setCards] = useState<Record<string, string>[]>([]);
+  const [update, setUpdate] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
 
   useEffect(() => {
     const getCards = async () => {
@@ -21,29 +26,69 @@ const App: React.FC = () => {
     } else {
       setCards(JSON.parse(sessionStorage.getItem("cards") ?? "{}"));
     }
-  }, []);
 
-  // GSAP (Not working)
-  // useEffect(() => {
-  //   gsap.utils.toArray(`.scrolling`).forEach((line: any) => {
-  //     const gsapCards = line.querySelectorAll("div"),
-  //       tl = horizontalLoop(gsapCards, {
-  //         speed: 1,
-  //         reversed: false,
-  //         repeat: -1,
-  //       });
-  //   });
-  // }, [cards]);
+    setUpdate(true);
+  }, []);
 
   return (
     <article className={$.app}>
-      <section>
-        <section className={$.scrolling}>
-          {cards.map((card: Record<string, string>, index) => (
-            <Card key={index} card={card} />
+      {page !== 0 ? (
+        <div className={$.backButton}>
+          <Icon
+            icon={"ion:arrow-back"}
+            width={40}
+            height={40}
+            color={page === 2 ? "#000" : "#fff"}
+            onClick={() => setPage(0)}
+          />
+        </div>
+      ) : null}
+      {page === 0 ? (
+        <section className={$.flexContainer}>
+          <h1>React GSAP Playground</h1>
+          <section className={$.optionWrapper}>
+            <p className={$.option} onClick={() => setPage(1)}>
+              Card Overview
+            </p>
+            <p className={$.option} onClick={() => setPage(2)}>
+              Card Scolling
+            </p>
+            <p className={$.option} onClick={() => setPage(3)}>
+              Card Throw
+            </p>
+            <p className={$.option} onClick={() => setPage(4)}>
+              Card Rain
+            </p>
+          </section>
+        </section>
+      ) : page === 2 ? (
+        <section className={$.scrollingWrapper}>
+          <CardScrolling cards={cards} identifier={"flex"} speed={0.1} />
+          <CardScrolling
+            cards={cards}
+            identifier={"flex-1"}
+            speed={0.1}
+            reverse={true}
+          />
+          <CardScrolling cards={cards} identifier={"flex-2"} speed={0.1} />
+          <CardScrolling
+            cards={cards}
+            identifier={"flex-3"}
+            reverse={true}
+            speed={0.1}
+          />
+        </section>
+      ) : page === 1 ? (
+        <section className={$.grid}>
+          {cards.map((card: Record<string, string>) => (
+            <Card key={card.name} card={card} />
           ))}
         </section>
-      </section>
+      ) : page === 3 ? (
+        <CardThrow cards={cards} />
+      ) : page === 4 ? (
+        <CardRain cards={cards} amount={50} />
+      ) : null}
     </article>
   );
 };
