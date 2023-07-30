@@ -1,16 +1,16 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-floating-promises */
+import { Icon } from "@iconify/react/dist/iconify.js";
 import { useEffect, useState } from "react";
 import { getData } from "../core/services/firebase/handlers";
 import $ from "../styles/app.module.scss";
-import CardScrolling from "./components/organisms/CardScrolling/CardScrolling";
 import Card from "./components/molecules/Card/Card";
-import CardThrow from "./components/organisms/CardThrow/CardThrow";
 import CardRain from "./components/organisms/CardRain/CardRain";
-import { Icon } from "@iconify/react/dist/iconify.js";
-import { cx } from "../core/helpers/join-classnames";
+import CardScrolling from "./components/organisms/CardScrolling/CardScrolling";
+import CardThrow from "./components/organisms/CardThrow/CardThrow";
 
 const App: React.FC = () => {
   const [cards, setCards] = useState<Record<string, string>[]>([]);
-  const [update, setUpdate] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
 
   useEffect(() => {
@@ -26,8 +26,6 @@ const App: React.FC = () => {
     } else {
       setCards(JSON.parse(sessionStorage.getItem("cards") ?? "{}"));
     }
-
-    setUpdate(true);
   }, []);
 
   return (

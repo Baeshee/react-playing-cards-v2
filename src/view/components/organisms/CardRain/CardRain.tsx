@@ -1,8 +1,8 @@
+import gsap from "gsap";
+import { Linear } from "gsap";
 import { useEffect } from "react";
-import $ from "./cardrain.module.scss";
-import Card from "../../molecules/Card/Card";
-import { TweenMax, Linear } from "gsap";
 import { cx } from "../../../../core/helpers/join-classnames";
+import $ from "./cardrain.module.scss";
 
 interface Props {
   amount: number;
@@ -33,7 +33,7 @@ const CardRain: React.FC<Props> = ({ amount, cards }) => {
         card.appendChild(symbol);
         card.appendChild(text);
 
-        TweenMax.to(card, speed, {
+        gsap.to(card, speed, {
           y: window.innerHeight,
           rotationY: 360,
           delay: delay,
