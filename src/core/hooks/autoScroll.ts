@@ -1,7 +1,15 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/restrict-plus-operands */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable prefer-const */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+// @ts-nocheck
 import gsap from "gsap";
-let extraSpacing = 20;
+const extraSpacing = 20;
 
-export function horizontalLoop(items, config) {
+export function horizontalLoop(items: any, config: any) {
   items = gsap.utils.toArray(items);
   config = config || {};
   let tl = gsap.timeline({
@@ -12,12 +20,13 @@ export function horizontalLoop(items, config) {
     }),
     length = items.length,
     startX = items[0].offsetLeft,
-    times = [],
-    widths = [],
-    xPercents = [],
+    times: any[] = [],
+    widths: any[] = [],
+    xPercents: any[] = [],
     curIndex = 0,
     pixelsPerSecond = (config.speed || 1) * 100,
-    snap = config.snap === false ? (v) => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
+    snap =
+      config.snap === false ? (v: any) => v : gsap.utils.snap(config.snap || 1), // some browsers shift by a pixel to accommodate flex layouts, so for example if width is 20% the first element's width might be 242px, and the next 243px, alternating back and forth. So we snap to 5 percentage points to make things look more natural
     totalWidth,
     curX,
     distanceToStart,
@@ -77,7 +86,7 @@ export function horizontalLoop(items, config) {
     times[i] = distanceToStart / pixelsPerSecond;
   }
 
-  function toIndex(index, vars) {
+  function toIndex(index: number, vars: any) {
     vars = vars || {};
     Math.abs(index - curIndex) > length / 2 &&
       (index += index > curIndex ? -length : length); // always go in the shortest direction
@@ -92,10 +101,10 @@ export function horizontalLoop(items, config) {
     vars.overwrite = true;
     return tl.tweenTo(time, vars);
   }
-  tl.next = (vars) => toIndex(curIndex + 1, vars);
-  tl.previous = (vars) => toIndex(curIndex - 1, vars);
+  tl.next = (vars: any) => toIndex(curIndex + 1, vars);
+  tl.previous = (vars: any) => toIndex(curIndex - 1, vars);
   tl.current = () => curIndex;
-  tl.toIndex = (index, vars) => toIndex(index, vars);
+  tl.toIndex = (index: number, vars: any) => toIndex(index, vars);
   tl.times = times;
   tl.progress(1, true).progress(0, true); // pre-render for performance
   if (config.reversed) {

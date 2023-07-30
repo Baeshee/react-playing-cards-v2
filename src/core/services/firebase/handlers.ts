@@ -1,6 +1,5 @@
-import { ref, getStorage, getDownloadURL } from "firebase/storage";
-import { doc, getDocs, setDoc, collection } from "firebase/firestore";
-import { db, app } from ".";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from ".";
 
 export const getData = async (collectionName: string) => {
   const data: Record<string, string>[] = [];
