@@ -1,9 +1,7 @@
-import { createElement, useEffect, useState } from "react";
-import $ from "./cardthrow.module.scss";
-import { cx } from "../../../../core/helpers/join-classnames";
 import gsap, { Power2 } from "gsap";
-import { Icon } from "@iconify/react";
-import { renderToString } from "react-dom/server";
+import { useEffect } from "react";
+import { cx } from "../../../../core/helpers/join-classnames";
+import $ from "./cardthrow.module.scss";
 
 interface Props {
   cards: Record<string, string>[];
